@@ -7,7 +7,7 @@
 #   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/09 11:19:53 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/09 15:01:01 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/09 15:41:21 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -35,7 +35,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
                 value = value.strip()
 
                 if key in config:
-                    print(f"Erreur ligne {line_num}: clé '{key}' déjà définie.")
+                    print(f"Clé '{key}' déjà définie.")
                     sys.exit(1)
 
                 try:
@@ -52,7 +52,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
 
                         y, x = map(int, parts)
                         if y < 0 or x < 0:
-                            raise ValueError(f"{key} ne peut pas contenir de coordonnées négatives")
+                            raise ValueError(f"{key} ne peut pas etre négatif")
                         config[key] = (y, x)
 
                     elif key == "PERFECT":
@@ -95,13 +95,37 @@ def config_parser(filename: str) -> Dict[str, Any]:
         )
         sys.exit(1)
 
+    width = config["WIDTH"]
+    height = config["HEIGHT"]
+    entry_y, entry_x = config["ENTRY"]
+    exit_y, exit_x = config["EXIT"]
+
+    if not (0 <= entry_x < width and 0 <= entry_y < height):
+        print(f"Erreur d'interface: ENTRY {config['ENTRY']} est"
+              f" hors des limites (Taille: {width}x{height}).")
+        sys.exit(1)
+
+    if not (0 <= exit_x < width and 0 <= exit_y < height):
+        print(f"Erreur d'interface: EXIT {config['EXIT']} est"
+              f" hors des limites (Taille: {width}x{height}).")
+        sys.exit(1)
+
+    if config["ENTRY"] == config["EXIT"]:
+        print("Erreur d'interface: ENTRY et EXIT doivent être" \
+        " à des coordonnées différentes.")
+        sys.exit(1)
+
+    if width < 12 or height < 12:
+        print("Attention: La taille du labyrinthe est " \
+        "trop petite pour afficher le motif '42'.")
+            
     return config
 
 if __name__ == "__main__":
     # Récupère le fichier passé en argument comme demandé par le sujet
     if len(sys.argv) != 2:
         print("Usage: python3 a_maze_ing.py config.txt")
-        sys.argv = [sys.argv[0], "config.txt"] # Fallback automatique pour tes tests locaux
+        sys.argv = [sys.argv[0], "config.txt"]
         
     parsed_config = config_parser(sys.argv[1])
     print("Configuration chargée avec succès :", parsed_config)

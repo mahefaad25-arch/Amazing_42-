@@ -1,7 +1,7 @@
 #test
-WIDTH = 15
-HEIGHT = 15
+WIDTH = 20
+HEIGHT = 19
 ENTRY     =0,0
-EXIT=19,14
+EXIT=0,0
 OUTPUT_FILE=maze.txt
 PERFECT=True
