@@ -7,60 +7,94 @@
 #   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/09 11:19:53 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/09 14:15:43 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/09 15:01:01 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import sys
 from typing import Dict, Any
 
-def config_parser(filename: str) -> Dict[str, Any]:
 
+def config_parser(filename: str) -> Dict[str, Any]:
     config: Dict[str, Any] = {}
-    
+
     try:
         with open(filename, "r") as file:
             for line_num, line in enumerate(file, 1):
                 line = line.strip()
-                
+
                 if not line or line.startswith("#"):
                     continue
-                
+
                 if "=" not in line:
-                    print(f"Erreur dans la ligne {line_num}: Pas de '='.")
+                    print(f"Erreur ligne {line_num}: pas de '='.")
                     sys.exit(1)
-                    
+
                 key, value = line.split("=", 1)
                 key = key.strip()
                 value = value.strip()
-                
+
+                if key in config:
+                    print(f"Erreur ligne {line_num}: clé '{key}' déjà définie.")
+                    sys.exit(1)
+
                 try:
                     if key in ["WIDTH", "HEIGHT"]:
                         config[key] = int(value)
+                        if config[key] <= 0:
+                            raise ValueError(f"{key} doit être supérieur à 0")
+
                     elif key in ["ENTRY", "EXIT"]:
-                        y, x = value.split(",")
-                        config[key] = (int(y), int(x))
+                        parts = value.split(",")
+
+                        if len(parts) != 2:
+                            raise ValueError("format attendu: y,x")
+
+                        y, x = map(int, parts)
+                        if y < 0 or x < 0:
+                            raise ValueError(f"{key} ne peut pas contenir de coordonnées négatives")
+                        config[key] = (y, x)
+
                     elif key == "PERFECT":
-                        config[key] = (value == "True")
+                        if value == "True":
+                            config[key] = True
+                        elif value == "False":
+                            config[key] = False
+                        else:
+                            raise ValueError(
+                                "PERFECT doit être True ou False"
+                            )
+
                     else:
                         config[key] = value
-                except ValueError:
-                    print(f"Erreur de valeur ligne {line_num}: Impossible de convertir")
+
+                except ValueError as e:
+                    print(f"Erreur ligne {line_num}: {e}")
                     sys.exit(1)
-                    
+
     except FileNotFoundError:
-        print(f"Erreur: Le fichier '{filename}' est introuvable.")
+        print(f"Erreur: le fichier '{filename}' est introuvable.")
         sys.exit(1)
+
     except PermissionError:
-        print(f"Erreur: Droits insuffisants pour lire le fichier '{filename}'.")
+        print(
+            f"Erreur: droits insuffisants pour lire '{filename}'."
+        )
         sys.exit(1)
-        
-    mandatory_keys = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "PERFECT", "OUTPUT_FILE"]
-    for m_key in mandatory_keys:
-        if m_key not in config:
-            print(f"Erreur de configuration: La clé obligatoire '{m_key}' est manquante.")
-            sys.exit(1)
-            
+
+    mandatory_keys = ["WIDTH","HEIGHT","ENTRY","EXIT","PERFECT",
+        "OUTPUT_FILE",
+    ]
+
+    missing = [key for key in mandatory_keys if key not in config]
+
+    if missing:
+        print(
+            "Erreur de configuration: clés manquantes : "
+            + ", ".join(missing)
+        )
+        sys.exit(1)
+
     return config
 
 if __name__ == "__main__":
