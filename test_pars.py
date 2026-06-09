@@ -7,7 +7,7 @@
 #   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/09 11:19:53 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/09 15:41:21 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/09 16:38:20 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -82,11 +82,9 @@ def config_parser(filename: str) -> Dict[str, Any]:
         )
         sys.exit(1)
 
-    mandatory_keys = ["WIDTH","HEIGHT","ENTRY","EXIT","PERFECT",
-        "OUTPUT_FILE",
-    ]
+    mandt_keys = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "PERFECT", "OUTPUT_FILE"]
 
-    missing = [key for key in mandatory_keys if key not in config]
+    missing = [key for key in mandt_keys if key not in config]
 
     if missing:
         print(
@@ -111,21 +109,24 @@ def config_parser(filename: str) -> Dict[str, Any]:
         sys.exit(1)
 
     if config["ENTRY"] == config["EXIT"]:
-        print("Erreur d'interface: ENTRY et EXIT doivent être" \
-        " à des coordonnées différentes.")
+        print(
+            "Erreur d'interface: ENTRY et EXIT doivent être"
+            " à des coordonnées différentes."
+        )
         sys.exit(1)
 
     if width < 12 or height < 12:
-        print("Attention: La taille du labyrinthe est " \
-        "trop petite pour afficher le motif '42'.")
-            
+        print(
+            "Attention: La taille du labyrinthe est "
+            "trop petite pour afficher le motif '42'."
+        )
     return config
+
 
 if __name__ == "__main__":
     # Récupère le fichier passé en argument comme demandé par le sujet
     if len(sys.argv) != 2:
         print("Usage: python3 a_maze_ing.py config.txt")
         sys.argv = [sys.argv[0], "config.txt"]
-        
     parsed_config = config_parser(sys.argv[1])
     print("Configuration chargée avec succès :", parsed_config)
