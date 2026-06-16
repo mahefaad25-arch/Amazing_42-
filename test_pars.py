@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   test_pars.py                                         :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/09 11:19:53 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/09 16:38:20 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/16 10:07:59 by loandria           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -31,7 +31,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
                     sys.exit(1)
 
                 key, value = line.split("=", 1)
-                key = key.strip()
+                key = key.strip().lower()
                 value = value.strip()
 
                 if key in config:
@@ -39,12 +39,12 @@ def config_parser(filename: str) -> Dict[str, Any]:
                     sys.exit(1)
 
                 try:
-                    if key in ["WIDTH", "HEIGHT"]:
+                    if key in ["width", "height"]:
                         config[key] = int(value)
                         if config[key] <= 0:
                             raise ValueError(f"{key} doit être supérieur à 0")
 
-                    elif key in ["ENTRY", "EXIT"]:
+                    elif key in ["entry", "exit"]:
                         parts = value.split(",")
 
                         if len(parts) != 2:
@@ -55,7 +55,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
                             raise ValueError(f"{key} ne peut pas etre négatif")
                         config[key] = (y, x)
 
-                    elif key == "PERFECT":
+                    elif key == "perfect":
                         if value == "True":
                             config[key] = True
                         elif value == "False":
@@ -82,7 +82,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
         )
         sys.exit(1)
 
-    mandt_keys = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "PERFECT", "OUTPUT_FILE"]
+    mandt_keys = ["width", "height", "entry", "exit", "perfect", "output_file"]
 
     missing = [key for key in mandt_keys if key not in config]
 
@@ -93,24 +93,24 @@ def config_parser(filename: str) -> Dict[str, Any]:
         )
         sys.exit(1)
 
-    width = config["WIDTH"]
-    height = config["HEIGHT"]
-    entry_y, entry_x = config["ENTRY"]
-    exit_y, exit_x = config["EXIT"]
+    width = config["width"]
+    height = config["height"]
+    entry_y, entry_x = config["entry"]
+    exit_y, exit_x = config["exit"]
 
     if not (0 <= entry_x < width and 0 <= entry_y < height):
-        print(f"Erreur d'interface: ENTRY {config['ENTRY']} est"
+        print(f"Erreur d'interface: entry {config['entry']} est"
               f" hors des limites (Taille: {width}x{height}).")
         sys.exit(1)
 
     if not (0 <= exit_x < width and 0 <= exit_y < height):
-        print(f"Erreur d'interface: EXIT {config['EXIT']} est"
+        print(f"Erreur d'interface: exit {config['exit']} est"
               f" hors des limites (Taille: {width}x{height}).")
         sys.exit(1)
 
-    if config["ENTRY"] == config["EXIT"]:
+    if config["entry"] == config["exit"]:
         print(
-            "Erreur d'interface: ENTRY et EXIT doivent être"
+            "Erreur d'interface: entry et exit doivent être"
             " à des coordonnées différentes."
         )
         sys.exit(1)

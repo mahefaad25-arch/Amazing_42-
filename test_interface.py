@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   test_interface.py                                    :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/09 16:33:10 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/09 17:36:16 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/16 11:27:43 by loandria           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -32,8 +32,8 @@ def start_interface(config: Dict[str, Any]):
     color_mode = 1
 
     # Instance de notre labyrinthe initialisé avec les tailles du parser
-    mon_labyrinthe = Maze(config["WIDTH"], config["HEIGHT"])
-    print(f"\nInitialisation d'une grille de {config['WIDTH']}x{config['HEIGHT']}...")
+    mon_labyrinthe = Maze(config["width"], config["height"])
+    print(f"\nInitialisation d'une grille de {config['width']}x{config['height']}...")
 
     while True:
         # 1. On affiche le rendu visuel ASCII à chaque tour de boucle
@@ -67,3 +67,34 @@ if __name__ == "__main__":
 
     ma_config = config_parser(sys.argv[1])
     start_interface(ma_config)
+
+"""
+
+maze = [
+    [_, _, _],
+    [_, _, _],
+    [_, _, _],
+]
+
+
+
+def find_neigboor(maze, x, y) -> list[Cell]:
+    neighboor = []
+    if not maze[x - 1][y].visited:
+        neightboor.append(maze[x - 1][y])
+    neightboor.append(maze[x + 1][y])
+    neightboor.append(maze[x][y - 1])
+    neightboor.append(maze[x][y + 1])
+    return neightboor
+
+
+def find_recursive(maze: list[list[Any]], x: int, y: int) -> None:
+    maze[x][y].visited = True
+    cell_neighboors = find_neighboor(maze, x, y) # rechercher les voisi de maze[x][y]
+    cell_neighboors = random.shuffle(cell_neighboors) # randomiser les place des voisin
+    for neighboor in cell_neighboors:
+        break_wall(neighboor)
+        break_wall(maze[x][y])
+        find_recursive(maze, neightboor.x, neightboor.y)
+
+"""

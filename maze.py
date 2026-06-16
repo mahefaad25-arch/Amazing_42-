@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   maze.py                                              :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/09 16:37:00 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/09 17:27:44 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/16 08:44:47 by loandria           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -36,6 +36,6 @@ class Maze:
                 mid_row += "   " # Espace intérieur de la case
             # Clôture du mur Est de la dernière case
             print(mid_row + "|")
-            
+
         # Dessiner le sol tout en bas du labyrinthe
         print("+---" * self.width + "+")
