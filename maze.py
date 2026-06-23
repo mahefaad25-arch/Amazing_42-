@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+# ########################################################################### #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   maze.py                                              :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/06/23 07:42:09 by loandria            #+#    #+#            #
+#   Updated: 2026/06/23 07:42:10 by loandria           ###   ########.fr      #
+#                                                                             #
+# ########################################################################### #
+
 # import re
 # import sys
 # from typing import List, Optional, Tuple

@@ -1,4 +1,16 @@
-# main.py
+#!/usr/bin/env python3
+# ########################################################################### #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   main.py                                              :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/06/23 07:42:31 by loandria            #+#    #+#            #
+#   Updated: 2026/06/23 07:42:37 by loandria           ###   ########.fr      #
+#                                                                             #
+# ########################################################################### #
+
 import sys
 from maze import Maze, load_config
 from maze_generator import MazeGenerator

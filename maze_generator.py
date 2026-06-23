@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+# ########################################################################### #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   maze_generator.py                                    :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/06/23 07:42:42 by loandria            #+#    #+#            #
+#   Updated: 2026/06/23 07:42:43 by loandria           ###   ########.fr      #
+#                                                                             #
+# ########################################################################### #
+
 import random
 from maze import Maze, Cell
 from typing import List

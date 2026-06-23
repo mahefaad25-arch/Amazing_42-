@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+# ########################################################################### #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   maze_solver.py                                       :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/06/23 07:42:26 by loandria            #+#    #+#            #
+#   Updated: 2026/06/23 07:42:27 by loandria           ###   ########.fr      #
+#                                                                             #
+# ########################################################################### #
+
 from maze import Maze, Cell
 from typing import List, Optional, Tuple
 
