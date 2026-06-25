@@ -7,21 +7,18 @@
 #   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/25 16:40:00 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/25 17:43:42 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/25 18:49:56 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import sys
-
-# Augmente la limite de récursion à 10 000 au lieu de 1 000 au cas où
-sys.setrecursionlimit(10000)
-
 from maze import Maze
 from test_pars import config_parser
 from maze_generator import MazeGenerator
 from solver import MazeSolver
 from interface import display_menu_instructions, MazeViewer
 
+sys.setrecursionlimit(10000)
 
 def main() -> None:
     if len(sys.argv) < 2:
