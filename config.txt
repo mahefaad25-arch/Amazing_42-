@@ -1,6 +1,6 @@
 #test
-WIDTH=50
-HEIGHT = 50
+WIDTH=20
+HEIGHT = 20
 entry     =0,8
 EXIT=14,5
 OUTPUT_FILE=maze.txt
