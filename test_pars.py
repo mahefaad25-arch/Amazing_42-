@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   test_pars.py                                         :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/09 11:19:53 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/23 07:42:20 by loandria           ###   ########.fr      #
+#   Updated: 2026/06/25 17:07:36 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -61,9 +61,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
                         elif value == "False":
                             config[key] = False
                         else:
-                            raise ValueError(
-                                "PERFECT doit être True ou False"
-                            )
+                            raise ValueError("PERFECT doit être True ou False")
 
                     else:
                         config[key] = value
@@ -77,9 +75,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
         sys.exit(1)
 
     except PermissionError:
-        print(
-            f"Erreur: droits insuffisants pour lire '{filename}'."
-        )
+        print(f"Erreur: droits insuffisants pour lire '{filename}'.")
         sys.exit(1)
 
     mandt_keys = ["width", "height", "entry", "exit", "perfect", "output_file"]
@@ -87,10 +83,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
     missing = [key for key in mandt_keys if key not in config]
 
     if missing:
-        print(
-            "Erreur de configuration: clés manquantes : "
-            + ", ".join(missing)
-        )
+        print("Erreur de configuration: clés manquantes : " + ", ".join(missing))
         sys.exit(1)
 
     width = config["width"]
@@ -99,13 +92,17 @@ def config_parser(filename: str) -> Dict[str, Any]:
     exit_y, exit_x = config["exit"]
 
     if not (0 <= entry_x < width and 0 <= entry_y < height):
-        print(f"Erreur d'interface: entry {config['entry']} est"
-              f" hors des limites (Taille: {width}x{height}).")
+        print(
+            f"Erreur d'interface: entry {config['entry']} est"
+            f" hors des limites (Taille: {width}x{height})."
+        )
         sys.exit(1)
 
     if not (0 <= exit_x < width and 0 <= exit_y < height):
-        print(f"Erreur d'interface: exit {config['exit']} est"
-              f" hors des limites (Taille: {width}x{height}).")
+        print(
+            f"Erreur d'interface: exit {config['exit']} est"
+            f" hors des limites (Taille: {width}x{height})."
+        )
         sys.exit(1)
 
     if config["entry"] == config["exit"]:
@@ -126,7 +123,8 @@ def config_parser(filename: str) -> Dict[str, Any]:
 if __name__ == "__main__":
     # Récupère le fichier passé en argument comme demandé par le sujet
     if len(sys.argv) != 2:
-        print("Usage: python3 a_maze_ing.py config.txt")
-        sys.argv = [sys.argv[0], "config.txt"]
+        print("Usage: python3 test_pars.py config.txt")
+        sys.exit(1)
+
     parsed_config = config_parser(sys.argv[1])
     print("Configuration chargée avec succès :", parsed_config)

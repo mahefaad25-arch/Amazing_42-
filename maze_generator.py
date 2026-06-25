@@ -4,16 +4,16 @@
 #                                                          :::      ::::::::  #
 #   maze_generator.py                                    :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/23 07:42:42 by loandria            #+#    #+#            #
-#   Updated: 2026/06/23 07:42:43 by loandria           ###   ########.fr      #
+#   Updated: 2026/06/25 16:30:06 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import random
 from maze import Maze, Cell
-from typing import List
+from typing import List, Tuple
 
 
 class MazeGenerator:
@@ -44,21 +44,21 @@ class MazeGenerator:
         dx = current.x - next_cell.x
         dy = current.y - next_cell.y
         if dx == 1:
-            current.walls['left'] = False
-            next_cell.walls['right'] = False
+            current.walls["left"] = False
+            next_cell.walls["right"] = False
         elif dx == -1:
-            current.walls['right'] = False
-            next_cell.walls['left'] = False
+            current.walls["right"] = False
+            next_cell.walls["left"] = False
         elif dy == 1:
-            current.walls['top'] = False
-            next_cell.walls['bottom'] = False
+            current.walls["top"] = False
+            next_cell.walls["bottom"] = False
         elif dy == -1:
-            current.walls['bottom'] = False
-            next_cell.walls['top'] = False
+            current.walls["bottom"] = False
+            next_cell.walls["top"] = False
 
-    def generate(self) -> None:
-        """Generate the paths using a randomized depth-first search."""
-        start_cell = self.maze.get_cell(0, 0)
+    def generate(self, start_coords: Tuple[int, int] = (0, 0)) -> None:
+        """Generate the paths using a randomized depth-first search from start_coords."""
+        start_cell = self.maze.get_cell(*start_coords)
         if not start_cell:
             return
         stack = [start_cell]
