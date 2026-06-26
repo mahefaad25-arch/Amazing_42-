@@ -1,47 +1,37 @@
-# Makefile for A-Maze-ing common tasks
+NAME=a_maze_ing.py
+VENV=.venv
+BIN_PATH=./$(VENV)/bin
+PIP=./$(BIN_PATH)/pip
+PYTHON=./$(BIN_PATH)/python
+FLAKE=./$(BIN_PATH)/flake8
+MYPY=./$(BIN_PATH)/mypy
 
-VENV=env
-PY=python3
-PIP=$(VENV)/bin/pip
-PYTHON=$(VENV)/bin/python
+install: $(VENV)
+	$(PIP) install --upgrade pip
+	$(PIP) install -r requirements.txt
 
-.PHONY: help venv activate install upgrade-pip reinstall-mlx run clean
+$(VENV):
+	python3 -m venv $(VENV)
 
-help:
-	@echo "Available targets:"
-	@echo "  make venv          -> create virtualenv (env/)"
-	@echo "  make activate      -> show activation command for your shell"
-	@echo "  make install       -> install mlx wheel into the venv"
-	@echo "  make upgrade-pip   -> upgrade pip inside the venv"
-	@echo "  make reinstall-mlx -> force reinstall mlx wheel"
-	@echo "  make run           -> run a_maze_ing.py with config.txt using venv python"
-	@echo "  make clean         -> remove the virtualenv"
+run:
+	$(PYTHON) $(NAME) config.txt
 
-venv:
-	@test -d $(VENV) || $(PY) -m venv $(VENV)
-	@$(PIP) install --upgrade pip setuptools wheel
+debug:
+	$(PYTHON) -m pdb $(NAME)
 
-activate:
-	@echo "For bash/zsh: source $(VENV)/bin/activate"
-	@echo "For fish:    source $(VENV)/bin/activate.fish"
-	@echo "Then run: make install  (or make run)"
+flake:
+	$(FLAKE) --exclude=$(VENV) .
 
-install: venv
-	@echo "Installing mlx wheel into virtualenv..."
-	@$(PIP) install ./mlx-2.2-py3-none-any.whl
-
-upgrade-pip: venv
-	@echo "Upgrading pip in virtualenv..."
-	@$(PIP) install --upgrade pip
-
-reinstall-mlx: venv
-	@echo "Forcing reinstall of mlx wheel..."
-	@$(PIP) install --force-reinstall ./mlx-2.2-py3-none-any.whl
-
-run: venv
-	@echo "Running a_maze_ing.py with $(PYTHON)..."
-	@$(PYTHON) a_maze_ing.py config.txt
+lint: flake
+	$(MYPY) --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs --explicit-package-bases .
 
 clean:
-	@echo "Removing virtualenv '$(VENV)'..."
+	find . -name "*.pyc" -exec rm -rf {} +
+	find . -type d \( -name "__pycache__" -o -name ".mypy_cache" \) -exec rm -rf {} +
+
+fclean: clean
 	rm -rf $(VENV)
+
+re: fclean install
+
+.PHONY: clean re fclean install run lint lint-strict flake debug
