@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   maze.py                                              :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/23 07:42:09 by loandria            #+#    #+#            #
-#   Updated: 2026/06/26 01:14:51 by loandria           ###   ########.fr      #
+#   Updated: 2026/06/26 07:04:53 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -29,6 +29,7 @@ class Cell:
         self.x = x
         self.y = y
         self.visited = False
+        self.is_center_42 = False
         self.walls = {"top": True, "right": True, "bottom": True, "left": True}
 
 

@@ -6,8 +6,9 @@ from maze_generator import MazeGenerator
 from solver import MazeSolver
 
 CELL_SIZE = 20
-ENTRY_COLOR = 0xFF0000FF  # Bleu pur pour l'entrée
-EXIT_COLOR = 0xFFFF0000  # Rouge pur pour la sortie
+ENTRY_COLOR = 0xFF0000FF
+EXIT_COLOR = 0xFFFF0000
+CENTER_42_COLOR = 0xFFFF5F00
 COLOR_PALETTES = {
     1: {"wall": 0xFFFFFFFF, "path": 0xFF00FF00, "bg": 0x00000000},
     2: {"wall": 0xFF00FFFF, "path": 0xFFFF00FF, "bg": 0x00112233},
@@ -82,7 +83,8 @@ class MazeViewer:
             for y in range(self.maze.height):
                 cell = self.maze.get_cell(x, y)
                 if cell:
-                    self.draw_cell_background(cell, palette["bg"])
+                    color = CENTER_42_COLOR if cell.is_center_42 else palette["bg"]
+                    self.draw_cell_background(cell, color)
 
         start_cell = self.maze.get_cell(*self.start_coords)
         end_cell = self.maze.get_cell(*self.end_coords)

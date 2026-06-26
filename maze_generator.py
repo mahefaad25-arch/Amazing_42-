@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   maze_generator.py                                    :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/23 07:42:42 by loandria            #+#    #+#            #
-#   Updated: 2026/06/26 01:13:23 by loandria           ###   ########.fr      #
+#   Updated: 2026/06/26 07:04:53 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -73,6 +73,7 @@ class MazeGenerator:
                     cell = self.maze.get_cell(center_x + dx, center_y + dy)
                     if cell:
                         cell.visited = True
+                        cell.is_center_42 = True
                         cell.walls["top"] = True
                         cell.walls["bottom"] = True
                         cell.walls["left"] = True
