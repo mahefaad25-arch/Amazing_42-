@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   solver.py                                            :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/23 07:42:26 by loandria            #+#    #+#            #
-#   Updated: 2026/06/25 17:44:57 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/26 01:20:31 by loandria           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -26,7 +26,8 @@ class MazeSolver:
         start_coords: Tuple[int, int] = (0, 0),
         end_coords: Optional[Tuple[int, int]] = None,
     ) -> List[Cell]:
-        """Solve the maze using an iterative DFS algorithm to avoid RecursionError."""
+        """Solve the maze using an iterative DFS
+        algorithm to avoid RecursionError."""
         if end_coords is None:
             end_coords = (self.maze.width - 1, self.maze.height - 1)
 
@@ -35,9 +36,6 @@ class MazeSolver:
 
         if not start_cell or not end_cell:
             return []
-
-        # Pile pour le DFS itératif contenant des tuples : (cellule_actuelle, index_de_la_direction_suivante)
-        # On garde aussi une liste 'path' dynamique pour simuler la pile d'exécution
         stack = [start_cell]
         visited_in_solving = {start_cell}
 
@@ -72,7 +70,6 @@ class MazeSolver:
                         parent_map[neighbor] = current
                         stack.append(neighbor)
 
-        # Si un chemin a été trouvé, on reconstruit la liste du départ à l'arrivée
         if found:
             path = []
             curr = end_cell

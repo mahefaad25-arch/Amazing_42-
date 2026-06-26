@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Interface module for graphical maze interaction."""
-
 from mlx import Mlx
 from maze import Maze
 from maze_generator import MazeGenerator

@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   maze_generator.py                                    :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/23 07:42:42 by loandria            #+#    #+#            #
-#   Updated: 2026/06/25 16:30:06 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/26 01:13:23 by loandria           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -56,13 +56,37 @@ class MazeGenerator:
             current.walls["bottom"] = False
             next_cell.walls["top"] = False
 
+    def reserve_center_42(self) -> None:
+        center_x = self.maze.width // 2
+        center_y = self.maze.height // 2
+
+        wall_42 = {
+            (-3, -2), (-3, -1), (-3, 0), (-2, 0), (-1, -2), (-1, -1),
+            (-1, 0), (-1, 1), (-1, 2),
+            (1, -2), (2, -2), (3, -2), (3, -1),
+            (1, 0), (2, 0), (3, 0), (1, 1), (1, 2), (2, 2), (3, 2)
+        }
+
+        for dy in range(-3, 4):
+            for dx in range(-5, 6):
+                if (dx, dy) in wall_42:
+                    cell = self.maze.get_cell(center_x + dx, center_y + dy)
+                    if cell:
+                        cell.visited = True
+                        cell.walls["top"] = True
+                        cell.walls["bottom"] = True
+                        cell.walls["left"] = True
+                        cell.walls["right"] = True
+
     def generate(self, start_coords: Tuple[int, int] = (0, 0)) -> None:
-        """Generate the paths using a randomized depth-first search from start_coords."""
+        """Generate the paths using a randomized
+          depth-first search from start_coords."""
+        self.reserve_center_42()
         start_cell = self.maze.get_cell(*start_coords)
         if not start_cell:
             return
-        stack = [start_cell]
         start_cell.visited = True
+        stack = [start_cell]
         while stack:
             current = stack[-1]
             neighbors = self.get_unvisited_neighbors(current)

@@ -4,10 +4,10 @@
 #                                                          :::      ::::::::  #
 #   maze.py                                              :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/23 07:42:09 by loandria            #+#    #+#            #
-#   Updated: 2026/06/25 17:07:36 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/26 01:14:51 by loandria           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -18,7 +18,7 @@ générateur (`maze_generator.py`) et le solveur (`maze_solver.py`).
 La méthode `display` offre un rendu console riche (blocs/chemin).
 """
 
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 
 # # maze.py
@@ -54,7 +54,8 @@ class Maze:
     def display(self, path: Optional[List[Cell]] = None) -> None:
         """Render the maze to the terminal with path highlighting.
 
-        `path` may be a list of `Cell` objects; celles du chemin seront marquées.
+        `path` may be a list of `Cell` objects;
+        celles du chemin seront marquées.
         """
         path_set = set(path) if path else set()
         r_width = self.width * 2 + 1

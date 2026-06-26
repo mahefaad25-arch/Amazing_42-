@@ -4,12 +4,13 @@
 #                                                          :::      ::::::::  #
 #   a_maze_ing.py                                        :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
-#   Created: 2026/06/25 16:40:00 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/25 18:49:56 by bramahef           ###   ########.fr      #
+#   Created: 2026/06/26 06:49:14 by loandria            #+#    #+#            #
+#   Updated: 2026/06/26 06:49:15 by loandria           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
+
 
 import sys
 from maze import Maze
@@ -19,6 +20,7 @@ from solver import MazeSolver
 from interface import display_menu_instructions, MazeViewer
 
 sys.setrecursionlimit(10000)
+
 
 def main() -> None:
     if len(sys.argv) < 2:
@@ -41,11 +43,13 @@ def main() -> None:
     generator.generate(start_coords=start_coords)
 
     solver = MazeSolver(maze)
-    chemin_solution = solver.solve(start_coords=start_coords, end_coords=end_coords)
+    chemin_solution = solver.solve(
+        start_coords=start_coords, end_coords=end_coords)
 
     display_menu_instructions()
     viewer = MazeViewer(
-        maze, start_coords=start_coords, end_coords=end_coords, path=chemin_solution
+        maze, start_coords=start_coords,
+        end_coords=end_coords, path=chemin_solution
     )
     viewer.run()
 
