@@ -4,13 +4,12 @@
 #                                                          :::      ::::::::  #
 #   a_maze_ing.py                                        :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
+#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/26 06:49:14 by loandria            #+#    #+#            #
-#   Updated: 2026/06/26 06:49:15 by loandria           ###   ########.fr      #
+#   Updated: 2026/06/26 10:03:13 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
-
 
 import sys
 from maze import Maze
@@ -32,12 +31,12 @@ def main() -> None:
 
     width = config["width"]
     height = config["height"]
-    entry_y, entry_x = config["entry"]
-    exit_y, exit_x = config["exit"]
+
+    entry_x, entry_y = config["entry"]
+    exit_x, exit_y = config["exit"]
 
     start_coords = (entry_x, entry_y)
     end_coords = (exit_x, exit_y)
-
     maze = Maze(width, height)
     generator = MazeGenerator(maze)
     generator.generate(start_coords=start_coords)
