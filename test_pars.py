@@ -7,7 +7,7 @@
 #   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/09 11:19:53 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/27 16:35:13 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/28 11:09:47 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -103,6 +103,11 @@ def config_parser(filename: str) -> Dict[str, Any]:
                         else:
                             raise ValueError("PERFECT doit être True ou False")
 
+                    elif key == "seed":
+                        config[key] = int(value)
+                        if config[key] < 0:
+                            raise ValueError("seed ne peut pas être négatif")
+
                     else:
                         config[key] = value
 
@@ -118,7 +123,7 @@ def config_parser(filename: str) -> Dict[str, Any]:
         print(f"Erreur: droits insuffisants pour lire '{filename}'.")
         sys.exit(1)
 
-    mandt_keys = ["width", "height", "entry", "exit", "perfect", "output_file"]
+    mandt_keys = ["width", "height", "entry", "exit", "perfect", "seed", "output_file"]
 
     missing = [key for key in mandt_keys if key not in config]
 

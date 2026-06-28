@@ -49,11 +49,32 @@ def maze_to_hex_lines(maze: Maze) -> List[str]:
     return lines
 
 
-def format_solution(path: Optional[Iterable[Cell]]) -> str:
-    """Format the solver path as a simple coordinate string."""
+def path_to_directions(path: Optional[Iterable[Cell]]) -> str:
+    """Convert an ordered path of cells into NESW directions."""
     if not path:
         return ""
-    return " ".join(f"{cell.x},{cell.y}" for cell in path)
+
+    directions: List[str] = []
+    previous: Cell | None = None
+    for cell in path:
+        if previous is None:
+            previous = cell
+            continue
+        dx = cell.x - previous.x
+        dy = cell.y - previous.y
+        if dx == 1 and dy == 0:
+            directions.append("E")
+        elif dx == -1 and dy == 0:
+            directions.append("W")
+        elif dx == 0 and dy == 1:
+            directions.append("S")
+        elif dx == 0 and dy == -1:
+            directions.append("N")
+        else:
+            # Non-adjacent cells should not happen for a valid path.
+            directions.append("?")
+        previous = cell
+    return "".join(directions)
 
 
 def write_maze_file(
@@ -65,10 +86,11 @@ def write_maze_file(
 ) -> None:
     """Write a maze file with hex cell codes, entry, exit, and solution."""
     lines = maze_to_hex_lines(maze)
-    solution_text = format_solution(solution)
+    solution_text = path_to_directions(solution)
     with open(filename, "w", encoding="utf-8") as f:
         for line in lines:
             f.write(f"{line}\n")
+        f.write("\n")
         f.write(f"{entry_coords[0]},{entry_coords[1]}\n")
         f.write(f"{exit_coords[0]},{exit_coords[1]}\n")
         f.write(f"{solution_text}\n")

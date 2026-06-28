@@ -7,7 +7,7 @@
 #   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/23 07:42:31 by loandria            #+#    #+#            #
-#   Updated: 2026/06/26 09:23:14 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/28 11:09:47 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -16,6 +16,7 @@ from maze import Maze
 from test_pars import config_parser
 from maze_exporter import write_maze_file
 from maze_generator import MazeGenerator
+from maze_animation import animate_path_progressive
 from solver import MazeSolver
 
 
@@ -32,9 +33,10 @@ def main() -> None:
 
     width = config["width"]
     height = config["height"]
-
     entry_x, entry_y = config["entry"]
     exit_x, exit_y = config["exit"]
+    perfect = config["perfect"]
+    seed = config["seed"]
 
     start_coords = (entry_x, entry_y)
     end_coords = (exit_x, exit_y)
@@ -43,7 +45,7 @@ def main() -> None:
     maze = Maze(width, height)
 
     # Génération du labyrinthe à partir de l'entrée officielle
-    generator = MazeGenerator(maze)
+    generator = MazeGenerator(maze, seed=seed, perfect=perfect)
     generator.generate(start_coords=start_coords)
 
     # Résolution du labyrinthe de l'entrée vers la sortie officielle
@@ -61,7 +63,13 @@ def main() -> None:
     print(f"Maze written to '{output_file}'")
 
     if chemin_solution:
-        maze.display(path=chemin_solution)
+        animate_path_progressive(
+            maze,
+            chemin_solution,
+            start_coords,
+            end_coords,
+            delay=0.12,
+        )
     else:
         print("Erreur : Aucun chemin de résolution trouvé.")
 

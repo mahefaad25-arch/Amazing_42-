@@ -34,13 +34,14 @@ def display_menu_instructions() -> None:
 class MazeViewer:
     """Gère l'affichage graphique interactif du labyrinthe via MiniLibX."""
 
-    def __init__(self, maze: Maze, start_coords, end_coords, path=None):
+    def __init__(self, maze: Maze, start_coords, end_coords, path=None, perfect=True):
         self.maze = maze
         self.start_coords = start_coords
         self.end_coords = end_coords
         self.path = path if path else []
         self.show_path = True
         self.color_mode = 1
+        self.perfect = perfect
 
         self.m = Mlx()
         self.mlx_ptr = self.m.mlx_init()
@@ -133,7 +134,7 @@ class MazeViewer:
         if keycode == 49 or keycode == 114:
             print("[Menu] 1. Re-génération et rechargement de la fenêtre...")
             self.maze = Maze(self.maze.width, self.maze.height)
-            generator = MazeGenerator(self.maze)
+            generator = MazeGenerator(self.maze, perfect=self.perfect)
             generator.generate(start_coords=self.start_coords)
             solver = MazeSolver(self.maze)
             self.path = solver.solve(

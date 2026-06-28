@@ -7,7 +7,7 @@
 #   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/23 07:42:09 by loandria            #+#    #+#            #
-#   Updated: 2026/06/26 07:04:53 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/28 11:03:01 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -52,13 +52,25 @@ class Maze:
             return self.grid[x][y]
         return None
 
-    def display(self, path: Optional[List[Cell]] = None) -> None:
+    def display(
+        self,
+        path: Optional[List[Cell]] = None,
+        entry_coords: Optional[tuple[int, int]] = None,
+        exit_coords: Optional[tuple[int, int]] = None,
+    ) -> None:
         """Render the maze to the terminal with path highlighting.
 
         `path` may be a list of `Cell` objects;
-        celles du chemin seront marquées.
+        `entry_coords` and `exit_coords` allow marking the configured start/end.
         """
         path_set = set(path) if path else set()
+        entry_cell = (
+            self.get_cell(*entry_coords) if entry_coords is not None else None
+        )
+        exit_cell = (
+            self.get_cell(*exit_coords) if exit_coords is not None else None
+        )
+
         r_width = self.width * 2 + 1
         r_height = self.height * 2 + 1
 
@@ -69,7 +81,14 @@ class Maze:
                 cell = self.grid[x][y]
                 cx, cy = x * 2 + 1, y * 2 + 1
 
-                grid[cy][cx] = "·" if cell in path_set else " "
+                if cell is entry_cell:
+                    grid[cy][cx] = "S"
+                elif cell is exit_cell:
+                    grid[cy][cx] = "E"
+                elif cell in path_set:
+                    grid[cy][cx] = "·"
+                else:
+                    grid[cy][cx] = " "
 
                 if not cell.walls["top"] and y > 0:
                     top_cell = self.grid[x][y - 1]
@@ -91,12 +110,6 @@ class Maze:
                     is_path = cell in path_set and right_cell in path_set
                     grid[cy][cx + 1] = "·" if is_path else " "
 
-        grid[0][1] = "·" if self.grid[0][0] in path_set else " "
-        exit_x, exit_y = self.width - 1, self.height - 1
-        grid[r_height - 1][r_width - 2] = (
-            "·" if self.grid[exit_x][exit_y] in path_set else " "
-        )
-
         for row in grid:
             line_str = ""
             for char in row:
@@ -104,6 +117,10 @@ class Maze:
                     line_str += "\033[40m  \033[0m"
                 elif char == "·":
                     line_str += "\033[47m\033[31m··\033[0m"
+                elif char == "S":
+                    line_str += "\033[42m\033[30mSS\033[0m"
+                elif char == "E":
+                    line_str += "\033[44m\033[97mEE\033[0m"
                 else:
                     line_str += "\033[47m  \033[0m"
             print(line_str)

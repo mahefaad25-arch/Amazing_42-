@@ -7,13 +7,14 @@
 #   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/06/26 06:49:14 by loandria            #+#    #+#            #
-#   Updated: 2026/06/26 10:03:13 by bramahef           ###   ########.fr      #
+#   Updated: 2026/06/28 11:25:29 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import sys
 from maze import Maze
 from test_pars import config_parser
+from maze_exporter import write_maze_file
 from maze_generator import MazeGenerator
 from solver import MazeSolver
 from interface import display_menu_instructions, MazeViewer
@@ -31,27 +32,41 @@ def main() -> None:
 
     width = config["width"]
     height = config["height"]
-
     entry_x, entry_y = config["entry"]
     exit_x, exit_y = config["exit"]
+    perfect = config["perfect"]
+    seed = config["seed"]
+    output_file = config["output_file"]
 
     start_coords = (entry_x, entry_y)
     end_coords = (exit_x, exit_y)
     maze = Maze(width, height)
-    generator = MazeGenerator(maze)
+    generator = MazeGenerator(maze, seed=seed, perfect=perfect)
     generator.generate(start_coords=start_coords)
 
     solver = MazeSolver(maze)
     chemin_solution = solver.solve(
-        start_coords=start_coords, end_coords=end_coords)
+        start_coords=start_coords, end_coords=end_coords
+    )
+
+    write_maze_file(
+        maze=maze,
+        entry_coords=start_coords,
+        exit_coords=end_coords,
+        solution=chemin_solution,
+        filename=output_file,
+    )
+    print(f"Maze written to '{output_file}'")
 
     display_menu_instructions()
     viewer = MazeViewer(
-        maze, start_coords=start_coords,
-        end_coords=end_coords, path=chemin_solution
+        maze,
+        start_coords=start_coords,
+        end_coords=end_coords,
+        path=chemin_solution,
+        perfect=perfect,
     )
     viewer.run()
-
 
 if __name__ == "__main__":
     main()
