@@ -166,6 +166,16 @@ def config_parser(filename: str) -> Dict[str, Any]:
         if is_in_42_pattern(exit_x, exit_y, width, height):
             print(f"Erreur: exit {config['exit']} est dans le motif '42' réservé.")
             sys.exit(1)
+    if width < 12 or height < 12:
+        print(
+            "Avertissement: la taille du labyrinthe est inférieure à 12x12."
+            " Le motif '42' ne sera pas appliqué."
+        )
+    if width >= 2 and height <3 or width < 3 and height >= 2:
+        print(
+            "erreur de case, trop petit pour un labyrinthe, la taille minimale est de 3x3"
+        )
+        sys.exit(1)
     return config
 
 if __name__ == "__main__":
