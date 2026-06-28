@@ -55,7 +55,7 @@ def find_default_coord(width: int, height: int, exclude: Tuple[int, int]) -> Tup
     return (0, 0)
 
 
-def config_parser(filename: str) -> None:
+def config_parser(filename: str) -> Dict[str, Any]:
     config: Dict[str, Any] = {}
 
     try:
@@ -166,7 +166,7 @@ def config_parser(filename: str) -> None:
         if is_in_42_pattern(exit_x, exit_y, width, height):
             print(f"Erreur: exit {config['exit']} est dans le motif '42' réservé.")
             sys.exit(1)
-
+    return config
 
 if __name__ == "__main__":
     # Récupère le fichier passé en argument comme demandé par le sujet
