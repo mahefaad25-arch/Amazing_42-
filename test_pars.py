@@ -55,7 +55,7 @@ def find_default_coord(width: int, height: int, exclude: Tuple[int, int]) -> Tup
     return (0, 0)
 
 
-def config_parser(filename: str) -> Dict[str, Any]:
+def config_parser(filename: str) -> None:
     config: Dict[str, Any] = {}
 
     try:
@@ -157,24 +157,15 @@ def config_parser(filename: str) -> Dict[str, Any]:
         )
         sys.exit(1)
 
-    # Check if entry or exit are in 42 pattern and apply defaults
-    if is_in_42_pattern(entry_x, entry_y, width, height):
-        print(f"Erreur: entry {config['entry']} est dans le motif '42' réservé.")
-        sys.exit(1)
+    # Check if entry or exit are in 42 pattern only if maze is large enough
+    if width >= 12 and height >= 12:
+        if is_in_42_pattern(entry_x, entry_y, width, height):
+            print(f"Erreur: entry {config['entry']} est dans le motif '42' réservé.")
+            sys.exit(1)
 
-    if is_in_42_pattern(exit_x, exit_y, width, height):
-        print(f"Erreur: exit {config['exit']} est dans le motif '42' réservé.")
-        default_exit = find_default_coord(width, height, (entry_x, entry_y))
-        print(f"Utilisation de exit par défaut: {default_exit}")
-        config["exit"] = default_exit
-        exit_x, exit_y = default_exit
-
-    if width < 12 or height < 12:
-        print(
-            "Attention: La taille du labyrinthe est "
-            "trop petite pour afficher le motif '42'."
-        )
-    return config
+        if is_in_42_pattern(exit_x, exit_y, width, height):
+            print(f"Erreur: exit {config['exit']} est dans le motif '42' réservé.")
+            sys.exit(1)
 
 
 if __name__ == "__main__":

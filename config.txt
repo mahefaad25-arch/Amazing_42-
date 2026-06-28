@@ -1,8 +1,8 @@
 #test
-WIDTH=3
-HEIGHT =3
+WIDTH=12
+HEIGHT =12
 entry     =0,0
-EXIT=1,2
+EXIT=9,8
 SEED=8
 OUTPUT_FILE=maze.txt
 PERFECT=False
