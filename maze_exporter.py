@@ -4,12 +4,13 @@
 #                                                          :::      ::::::::  #
 #   maze_exporter.py                                     :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: GitHub Copilot <copilot@example.com>          +#+  +:+       +#+       #
+#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
-#   Created: 2026/06/26 15:00:00 by copilot            #+#    #+#            #
-#   Updated: 2026/06/26 15:00:00 by copilot           ###   ########.fr      #
+#   Created: 2026/06/29 16:13:53 by bramahef            #+#    #+#            #
+#   Updated: 2026/06/29 16:13:54 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
+
 
 from typing import Iterable, List, Optional, Tuple
 from maze import Maze, Cell

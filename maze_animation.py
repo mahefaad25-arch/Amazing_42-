@@ -4,12 +4,13 @@
 #                                                          :::      ::::::::  #
 #   maze_animation.py                                    :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
-#   By: GitHub Copilot <copilot@example.com>          +#+  +:+       +#+       #
+#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
-#   Created: 2026/06/28 00:00:00 by copilot             #+#    #+#            #
-#   Updated: 2026/06/28 00:00:00 by copilot           ###   ########.fr      #
+#   Created: 2026/06/29 16:13:32 by bramahef            #+#    #+#            #
+#   Updated: 2026/06/29 16:13:33 by bramahef           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
+
 
 import time
 from typing import List

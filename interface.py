@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+# ########################################################################### #
+#   shebang: 1                                                                #
+#                                                          :::      ::::::::  #
+#   interface.py                                         :+:      :+:    :+:  #
+#                                                      +:+ +:+         +:+    #
+#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
+#                                                  +#+#+#+#+#+   +#+          #
+#   Created: 2026/06/29 16:13:20 by bramahef            #+#    #+#            #
+#   Updated: 2026/06/29 16:13:46 by bramahef           ###   ########.fr      #
+#                                                                             #
+# ########################################################################### #
+
 """Interface module for graphical maze interaction."""
 from mlx import Mlx
 from maze import Maze
