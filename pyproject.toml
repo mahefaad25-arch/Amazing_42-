@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+mazegen = "mazegen.cli:main"
+
+[project]
+name = "mazegen"
+version = "1.0.0"
+description = "Maze generation and solving package"
+readme = "README.md"
+requires-python = ">=3.10"
+
+authors = [
+  { name = "loandria", email = "loandria@student.42antananarivo.mg" },
+  { name = "bramahef", email = "bramahef@student.42antananarivo.mg" }
+]
+
+license = { text = "MIT" }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mazegen*"]

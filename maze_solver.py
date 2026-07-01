@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
-# ########################################################################### #
-#   shebang: 1                                                                #
-#                                                          :::      ::::::::  #
-#   solver.py                                            :+:      :+:    :+:  #
-#                                                      +:+ +:+         +:+    #
-#   By: loandria <loandria@student.42antananarivo.   +#+  +:+       +#+       #
-#                                                  +#+#+#+#+#+   +#+          #
-#   Created: 2026/06/23 07:42:26 by loandria            #+#    #+#            #
-#   Updated: 2026/06/26 01:20:31 by loandria           ###   ########.fr      #
-#                                                                             #
-# ########################################################################### #
 
-from typing import List, Optional, Tuple
-from maze import Maze, Cell
+from collections import deque
+from typing import List, Optional, Tuple, Any
+from mazegen import Maze, Cell
 
 
 class MazeSolver:
-    """Handles finding a path from start to end in a Maze object."""
+    """Handles finding a path from start to end in a Maze object.
+
+    This class provides maze-solving utilities, currently implemented with a
+    breadth-first search (BFS) approach implemented iteratively to avoid
+    recursion depth issues.
+    """
 
     def __init__(self, maze: Maze) -> None:
+        """Initialize the solver with a maze instance.
+
+        Args:
+            maze: The `Maze` object to solve.
+        """
         self.maze = maze
 
     def solve(
@@ -26,8 +26,25 @@ class MazeSolver:
         start_coords: Tuple[int, int] = (0, 0),
         end_coords: Optional[Tuple[int, int]] = None,
     ) -> List[Cell]:
-        """Solve the maze using an iterative DFS
-        algorithm to avoid RecursionError."""
+        """Find a path from `start_coords` to `end_coords` using BFS.
+
+        The search explores neighbors in the order: top, right, bottom, left
+        and respects cell walls. Returned path is an ordered list of `Cell`
+        objects from start to end inclusive. If no path exists, an empty list
+        is returned.
+
+        Args:
+            start_coords: Tuple `(x, y)` for the start cell.
+            Defaults to (0, 0).
+            end_coords: Optional tuple `(x, y)` for the end cell.
+            If `None`, the
+                bottom-right corner of the maze is used.
+
+        Returns:
+            A list of `Cell` instances representing the path from start to
+            end. Returns an empty list if start/end are invalid or no path is
+            found.
+        """
         if end_coords is None:
             end_coords = (self.maze.width - 1, self.maze.height - 1)
 
@@ -36,21 +53,18 @@ class MazeSolver:
 
         if not start_cell or not end_cell:
             return []
-        stack = [start_cell]
+        stack = deque([start_cell])
         visited_in_solving = {start_cell}
-
-        # Dictionnaire pour retrouver le chemin (parent de chaque cellule)
-        parent_map: dict[Cell, Optional[Cell]] = {start_cell: None}
+        parent_map: dict[Cell, Any] = {start_cell: None}
 
         found = False
         while stack:
-            current = stack.pop()
+            current = stack.popleft()
 
             if current == end_cell:
                 found = True
                 break
 
-            # Définition des directions adjacentes
             directions = [
                 ((current.x, current.y - 1), "top", "bottom"),
                 ((current.x + 1, current.y), "right", "left"),
@@ -61,7 +75,6 @@ class MazeSolver:
             for (nx, ny), wall_current, wall_neighbor in directions:
                 neighbor = self.maze.get_cell(nx, ny)
                 if neighbor and neighbor not in visited_in_solving:
-                    # Vérifier s'il n'y a pas de mur entre les deux cellules
                     if (
                         not current.walls[wall_current]
                         and not neighbor.walls[wall_neighbor]

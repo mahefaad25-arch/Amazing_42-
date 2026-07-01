@@ -1,29 +1,28 @@
 #!/usr/bin/env python3
-# ########################################################################### #
-#   shebang: 1                                                                #
-#                                                          :::      ::::::::  #
-#   a_maze_ing.py                                        :+:      :+:    :+:  #
-#                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
-#                                                  +#+#+#+#+#+   +#+          #
-#   Created: 2026/06/26 06:49:14 by loandria            #+#    #+#            #
-#   Updated: 2026/06/28 11:25:29 by bramahef           ###   ########.fr      #
-#                                                                             #
-# ########################################################################### #
+
 
 import sys
-from maze import Maze
-from test_pars import config_parser
+from mazegen import Maze, MazeGenerator
+from config_parser import config_parser
 from maze_exporter import write_maze_file
-from maze_generator import MazeGenerator
-from solver import MazeSolver
-from interface import display_menu_instructions, MazeViewer
+from maze_solver import MazeSolver
+try:
+    from maze_interface import display_menu_instructions, MazeViewer
+except Exception as e:
+    print(e)
+    sys.exit(1)
 
 sys.setrecursionlimit(10000)
 
 
 def main() -> None:
-    if len(sys.argv) < 2:
+    """Parse configuration, generate the maze, solve it, and launch the viewer.
+
+    This function reads the provided configuration file, creates the maze,
+    generates passages, solves the maze, writes the maze output file, and
+    launches the graphical viewer.
+    """
+    if len(sys.argv) != 2:
         print("Usage: python3 a_maze_ing.py config.txt")
         sys.exit(1)
 
@@ -41,11 +40,15 @@ def main() -> None:
     start_coords = (entry_x, entry_y)
     end_coords = (exit_x, exit_y)
     maze = Maze(width, height)
-    generator = MazeGenerator(maze, seed=seed, perfect=perfect)
-    generator.generate(start_coords=start_coords)
+    try:
+        generator = MazeGenerator(maze, seed=seed, perfect=perfect)
+        generator.generate(start_coords=start_coords)
+    except KeyboardInterrupt:
+        print("Maze generation interrupted by user.")
+        sys.exit(1)
 
     solver = MazeSolver(maze)
-    chemin_solution = solver.solve(
+    solution_path = solver.solve(
         start_coords=start_coords, end_coords=end_coords
     )
 
@@ -53,7 +56,7 @@ def main() -> None:
         maze=maze,
         entry_coords=start_coords,
         exit_coords=end_coords,
-        solution=chemin_solution,
+        solution=solution_path,
         filename=output_file,
     )
     print(f"Maze written to '{output_file}'")
@@ -63,10 +66,19 @@ def main() -> None:
         maze,
         start_coords=start_coords,
         end_coords=end_coords,
-        path=chemin_solution,
+        path=solution_path,
         perfect=perfect,
+        output_file=output_file,
     )
     viewer.run()
 
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nProgram interrupted by user. Exiting...")
+        sys.exit(0)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        sys.exit(1)
