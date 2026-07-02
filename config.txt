@@ -1,13 +1,4 @@
-<<<<<<< HEAD
-#test
-WIDTH=12
-HEIGHT=13
-entry = 0,0
-EXIT=1,9
-SEED=4
-OUTPUT_FILE=maze.txt
-PERFECT=false
-=======
+
 width=40
 HEIGHT=15
 entry =      0,0
@@ -15,4 +6,3 @@ EXIT=35,14
 SEED = 4
 PERFECT=false
 output_file = maze.txt
->>>>>>> da8fb51 (alldone and tested)

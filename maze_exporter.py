@@ -1,18 +1,3 @@
-#!/usr/bin/env python3
-<<<<<<< HEAD
-# ########################################################################### #
-#   shebang: 1                                                                #
-#                                                          :::      ::::::::  #
-#   maze_exporter.py                                     :+:      :+:    :+:  #
-#                                                      +:+ +:+         +:+    #
-#   By: bramahef <bramahef@student.42antananarivo.   +#+  +:+       +#+       #
-#                                                  +#+#+#+#+#+   +#+          #
-#   Created: 2026/06/29 16:13:53 by bramahef            #+#    #+#            #
-#   Updated: 2026/06/29 16:13:54 by bramahef           ###   ########.fr      #
-#                                                                             #
-# ########################################################################### #
-=======
->>>>>>> da8fb51 (alldone and tested)
 
 
 from typing import Iterable, List, Optional, Tuple
